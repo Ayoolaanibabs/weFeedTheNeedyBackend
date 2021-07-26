@@ -50,7 +50,7 @@ exports.updateStatistics = async (req, res) => {
 		await Statistics.updateOne({ _id: id }, { $set: update });
 		res.json({
             status: 'SUCCESS',
-            message: 'The statistics have been updated'
+            message: 'The statistics have been updated!'
         });
 
 	} catch (error) {
