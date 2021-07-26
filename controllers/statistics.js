@@ -24,7 +24,9 @@ exports.addStatistics = async (req, res)=> {
 exports.getStatistics = async (req, res) => {
 	try{
 		const { id } = req.params;
-		const info = await Statistics.findOne({ _id: id });
+        const result = await Statistics.findOne({ _id: id });
+
+		if (!result.length) res.json({success: false, message: 'Statistic does not exist!'});
 
         res.json({
             status: 'SUCCESS',
