@@ -100,3 +100,24 @@ exports.getAllStatistics = async (req, res) => {
         });
 	}
 };
+
+exports.getStatisticsByLocation = async (req, res) => {
+    try{
+		const { location } = req.params;
+        const result = await Statistics.find({ location: location });
+
+		if (!result.length) res.json({success: false, message: 'No record in database!'});
+
+        res.json({
+            status: 'SUCCESS',
+            payload:{
+            result
+            }
+        });
+	} catch (error) {
+		res.json({
+            success: false,
+            message: error,
+        });
+	}
+};

@@ -6,10 +6,12 @@ const {
     getStatistics, 
     updateStatistics, 
     deleteStatistics,
-    getAllStatistics
+    getAllStatistics,
+    getStatisticsByLocation
 } = require('../controllers/statistics');
 
 router.get('/statistics/all', getAllStatistics)
+router.get('/statistics/:location', getStatisticsByLocation)
 router.get('/statistics/:id', getStatistics)
 router.post('/statistics', addStatistics)
 router.put('/statistics/:id', updateStatistics)
