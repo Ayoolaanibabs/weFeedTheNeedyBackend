@@ -5,9 +5,11 @@ const {
     addStatistics, 
     getStatistics, 
     updateStatistics, 
-    deleteStatistics 
+    deleteStatistics,
+    getAllStatistics
 } = require('../controllers/statistics');
 
+router.get('/statistics/all', getAllStatistics)
 router.get('/statistics/:id', getStatistics)
 router.post('/statistics', addStatistics)
 router.put('/statistics/:id', updateStatistics)

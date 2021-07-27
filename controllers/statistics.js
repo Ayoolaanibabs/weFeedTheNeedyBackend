@@ -26,12 +26,12 @@ exports.getStatistics = async (req, res) => {
 		const { id } = req.params;
         const result = await Statistics.findOne({ _id: id });
 
-		if (!result.length) res.json({success: false, message: 'Statistic does not exist!'});
+		//if (!result.length) res.json({success: false, message: 'Statistic does not exist!'});
 
         res.json({
             status: 'SUCCESS',
             payload:{
-            info
+            result
             }
         });
 	} catch (error) {
@@ -52,7 +52,7 @@ exports.updateStatistics = async (req, res) => {
 		await Statistics.updateOne({ _id: id }, { $set: update });
 		res.json({
             status: 'SUCCESS',
-            message: 'The statistics have been updated!'
+            message: 'The statistics has been updated!'
         });
 
 	} catch (error) {
@@ -82,4 +82,21 @@ exports.deleteStatistics = async (req, res) => {
             message: 'Statisics was not found',
         });
     }
+};
+
+exports.getAllStatistics = async (req, res) => {
+	try{
+        const result = await Statistics.find({});
+        res.json({
+            status: 'SUCCESS',
+            payload:{
+            result
+            }
+        });
+	} catch (error) {
+		res.json({
+            success: false,
+            message: 'No Statisics was not found',
+        });
+	}
 };
