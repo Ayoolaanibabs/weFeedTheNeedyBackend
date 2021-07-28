@@ -7,7 +7,7 @@ const statisticsSchema = new Schema({
         required: true
     },
     donationsRecieved:{
-        type: String,
+        type: Number,
         required: true
     },
     amountSpent: {
@@ -21,6 +21,12 @@ const statisticsSchema = new Schema({
     numberOfMealsServed: {
         type: Number,
         required: true
+    },
+    month: {
+        type: String,
+        required: true,
+        enum: ['january','february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'],
+        lowercase: true
     }
 },
     {
@@ -28,5 +34,5 @@ const statisticsSchema = new Schema({
     }
 );
 
-const Statistics = mongoose.model('Suggest', statisticsSchema);
+const Statistics = mongoose.model('Statistics', statisticsSchema);
 module.exports = Statistics;

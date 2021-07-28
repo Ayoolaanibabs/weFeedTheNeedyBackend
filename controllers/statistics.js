@@ -1,4 +1,4 @@
-Statistics = require('../models/statistics');
+const Statistics = require('../models/statistics');
 
 exports.addStatistics = async (req, res)=> {
 	try {
@@ -13,10 +13,9 @@ exports.addStatistics = async (req, res)=> {
         });
 
 	} catch (error) {
-        res.json({
+        res.status(error.statusCode || 400).json({
             success: false,
-            message: 'Statisics was not added',
-            error
+            message: error.message
         })
 	}
 };
@@ -35,9 +34,9 @@ exports.getStatistics = async (req, res) => {
             }
         });
 	} catch (error) {
-		res.json({
+		res.status(error.statusCode || 400).json({
             success: false,
-            message: 'Statisics was not found',
+            message: error.message,
         });
 	}
 };
@@ -48,7 +47,7 @@ exports.updateStatistics = async (req, res) => {
 		const update = req.body ;
 		const result = await Statistics.find({ _id: id });
 
-		if (!result.length) res.json({success: false, message: 'Statistic does not exist!'});
+		if (!result.length) res.status(404).json({success: false, message: 'Statistic does not exist!'});
 		await Statistics.updateOne({ _id: id }, { $set: update });
 		res.json({
             status: 'SUCCESS',
@@ -56,9 +55,9 @@ exports.updateStatistics = async (req, res) => {
         });
 
 	} catch (error) {
-		res.json({
+		res.status(error.statusCode || 404).json({
             success: false,
-            message: 'Statisics was not found',
+            message: error.message,
         });
 	}
 };
@@ -68,7 +67,7 @@ exports.deleteStatistics = async (req, res) => {
         const { id } = req.params;
         const result = await Statistics.find({ _id: id });
 
-		if (!result.length) res.json({success: false, message: 'Statistic does not exist!'});
+		if (!result.length) res.status(404).json({success: false, message: 'Statistic does not exist!'});
 
         await Statistics.deleteOne({ _id: id });
 
@@ -77,9 +76,9 @@ exports.deleteStatistics = async (req, res) => {
             message: 'The statistics have been deleted'
         });
     } catch (error) {
-        res.json({
+        res.status(error.statusCode || 400).json({
             success: false,
-            message: 'Statisics was not found',
+            message: error.message,
         });
     }
 };
@@ -94,9 +93,9 @@ exports.getAllStatistics = async (req, res) => {
             }
         });
 	} catch (error) {
-		res.json({
+		res.status(error.statusCode || 404).json({
             success: false,
-            message: 'No Statisics was not found',
+            message: error.message,
         });
 	}
 };
@@ -106,7 +105,28 @@ exports.getStatisticsByLocation = async (req, res) => {
 		const { location } = req.params;
         const result = await Statistics.find({ location: location });
 
-		if (!result.length) res.json({success: false, message: 'No record in database!'});
+		if (!result.length) res.status(404).send({success: false, message: 'No record in database!'});
+
+        res.json({
+            status: 'SUCCESS',
+            payload:{
+            result
+            }
+        });
+	} catch (error) {
+		res.status(error.statusCode || 400).json({
+            success: false,
+            message: error.message
+        });
+	}
+};
+
+exports.getStatisticsByMonth = async (req, res) => {
+    try{
+		const { month } = req.params;
+        const result = await Statistics.find({ month: month });
+
+		if (!result.length) res.status(404).json({success: false, message: 'No record in database!'});
 
         res.json({
             status: 'SUCCESS',
@@ -117,7 +137,7 @@ exports.getStatisticsByLocation = async (req, res) => {
 	} catch (error) {
 		res.json({
             success: false,
-            message: error,
+            message: error.message,
         });
 	}
 };

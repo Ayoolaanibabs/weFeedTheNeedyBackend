@@ -1,18 +1,21 @@
 const express = require('express');
 const general = require('./routes/general');
 const statistics = require('./routes/statistics');
+const feedback = require('./routes/feedback');
 const { connectToDatabase } = require('./databaseConfig');
 app = express();
 
 const cors = require('cors');
-connectToDatabase() //Establishing database connection
+connectToDatabase(); //Establishing database connection
 
 app.use(cors());
 
 app.use(express.json());
 
 app.use('/', general);
-app.use('/api', statistics)
+app.use('/api', statistics);
+app.use('/api', feedback);
+
 //Handling wild routes
 app.use('/**',(req, res, next)=>{
     res.status(404);

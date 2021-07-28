@@ -7,14 +7,16 @@ const {
     updateStatistics, 
     deleteStatistics,
     getAllStatistics,
-    getStatisticsByLocation
+    getStatisticsByLocation,
+    getStatisticsByMonth
 } = require('../controllers/statistics');
 
-router.get('/statistics/all', getAllStatistics)
-router.get('/statistics/:location', getStatisticsByLocation)
-router.get('/statistics/:id', getStatistics)
-router.post('/statistics', addStatistics)
-router.put('/statistics/:id', updateStatistics)
-router.delete('/statistics/:id', deleteStatistics)
+router.get('/statistics/all', getAllStatistics);
+router.get('/statistics/location/:location', getStatisticsByLocation);
+router.get('/statistics/month/:month', getStatisticsByMonth);
+router.get('/statistics/:id', getStatistics);
+router.post('/statistics', addStatistics);
+router.put('/statistics/:id', updateStatistics);
+router.delete('/statistics/:id', deleteStatistics);
 
 module.exports = router;
