@@ -18,6 +18,11 @@ const feedbackSchema = new Schema({
     message:{
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['read', 'unread'],
+        default: 'unread'
     }
 },
     {
